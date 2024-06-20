@@ -7,6 +7,7 @@ import (
 
 	"ascii_art/map_rune_art"
 	"ascii_art/print_ascii"
+	"ascii_art/read_files"
 )
 
 var (
@@ -33,26 +34,7 @@ func main() {
 		return
 	}
 
-	if len(os.Args) == 2 || (len(os.Args) == 3 && os.Args[2] == "standard") {
-		bytes, read_err = os.ReadFile("banners/standard.txt")
-	} else if os.Args[2] == "shadow" {
-		bytes, read_err = os.ReadFile("banners/shadow.txt")
-	} else if os.Args[2] == "thinkertoy" {
-		bytes, read_err = os.ReadFile("banners/thinkertoy.txt")
-	} else {
-		fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")
-		return
-	}
-
-	if read_err != nil {
-		fmt.Println(read_err)
-	}
-
-	if len(os.Args) == 3 && os.Args[2] == "thinkertoy" {
-		lines = strings.Split(string(bytes), "\r\n")
-	} else {
-		lines = strings.Split(string(bytes), "\n")
-	}
+	lines = read_files.ReadFiles(bytes, read_err, lines)
 
 	// get the string form the command line arguments
 	str_input := os.Args[1]
