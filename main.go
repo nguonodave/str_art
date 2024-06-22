@@ -13,6 +13,7 @@ import (
 var (
 	bytes              []byte
 	read_err           error
+	read_lines_err     bool
 	lines              []string
 	char_art_map       = make(map[rune][]string)
 	current_ascii_char = 32
@@ -34,7 +35,10 @@ func main() {
 		return
 	}
 
-	lines = read_files.ReadFiles(bytes, read_err, lines)
+	lines, read_lines_err = read_files.ReadFiles(bytes, read_err, lines)
+	if read_lines_err {
+		return
+	}
 
 	// get the string form the command line arguments
 	str_input := os.Args[1]
