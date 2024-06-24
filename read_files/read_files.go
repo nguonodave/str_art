@@ -9,10 +9,19 @@ import (
 	"ascii_art/file_integrity"
 )
 
+func print_usage() {
+	fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")	
+}
+
 func ReadFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
 	var file_path string
 	var original_hash string
 	banners_dir := "banners/"
+
+	if len(os.Args) > 3 {
+		print_usage()
+		return nil, true
+	}
 
 	if len(os.Args) == 2 || (len(os.Args) == 3 && os.Args[2] == "standard") {
 		file_path = banners_dir + "standard.txt"
@@ -23,8 +32,11 @@ func ReadFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
 	} else if os.Args[2] == "thinkertoy" {
 		file_path = banners_dir + "thinkertoy.txt"
 		original_hash = "64285e4960d199f4819323c4dc6319ba34f1f0dd9da14d07111345f5d76c3fa3"
+	} else if os.Args[2] != "thinkertoy" {
+		fmt.Println("Invalid banner file. Use either standard, shadow, or thinkertoy")
+		return nil, true
 	} else {
-		fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")
+		print_usage()
 		return nil, true
 	}
 
