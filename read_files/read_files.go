@@ -2,15 +2,15 @@ package read_files
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"strings"
 
+	"ascii_art/download_file"
 	"ascii_art/file_integrity"
 )
 
 func print_usage() {
-	fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")	
+	fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard") 
 }
 
 func ReadFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
@@ -40,9 +40,10 @@ func ReadFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
 		return nil, true
 	}
 
-	if chmod_err := os.Chmod(file_path, 0o400); chmod_err != nil {
-		log.Fatal("Error changing file permissions", chmod_err)
-	}
+	// // only allow read permissions
+	// if chmod_err := os.Chmod(file_path, 0o400); chmod_err != nil {
+	// 	log.Fatal("Error changing file permissions", chmod_err)
+	// }
 
 	bytes, read_err = os.ReadFile(file_path)
 	if read_err != nil {
@@ -54,7 +55,8 @@ func ReadFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
 
 	// print error message if a file is altered
 	if file_altered {
-		fmt.Println("File(s) data probably altered. Please download them from the following link\nhttps://learn.zone01kisumu.ke/git/root/public/src/branch/master/subjects/ascii-art")
+		fmt.Println("File(s) data probably altered.\nDownloading the original version...")
+		download_file.DownloadFile(file_path)
 		return nil, true
 	}
 
