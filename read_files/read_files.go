@@ -40,22 +40,13 @@ func ReadFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
 		return nil, true
 	}
 
-	// // only allow read permissions
-	// if chmod_err := os.Chmod(file_path, 0o400); chmod_err != nil {
-	// 	log.Fatal("Error changing file permissions", chmod_err)
-	// }
-
 	bytes, read_err = os.ReadFile(file_path)
-	if read_err != nil {
-		fmt.Println("Error reading file", read_err)
-		return nil, true
-	}
 
 	file_altered := file_integrity.FileAltered(bytes, original_hash)
 
-	// print error message if a file is altered
-	if file_altered {
-		fmt.Println("File(s) data probably altered.\nDownloading the original version...")
+	// download original file if it doesn't exist or is altered
+	if _, file_err := os.Stat(file_path); os.IsNotExist(file_err) || file_altered {
+		fmt.Println("File(s) missing or data probably altered.\nDownloading the original version...")
 		download_file.DownloadFile(file_path)
 		return nil, true
 	}
