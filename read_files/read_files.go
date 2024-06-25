@@ -2,6 +2,7 @@ package read_files
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -17,6 +18,13 @@ func ReadFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
 	var file_path string
 	var original_hash string
 	banners_dir := "banners/"
+
+	if _, banners_err := os.Stat(banners_dir); os.IsNotExist(banners_err) {
+		create_banners_err := os.Mkdir("banners", 0700)
+		if create_banners_err != nil {
+			log.Fatal(create_banners_err)
+		}
+	}
 
 	if len(os.Args) > 3 {
 		print_usage()
