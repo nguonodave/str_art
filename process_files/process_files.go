@@ -1,4 +1,4 @@
-package read_files
+package process_files
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ func print_usage() {
 	fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard") 
 }
 
-func ReadFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
+func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
 	var file_path string
 	var original_hash string
 	banners_dir := "banners/"

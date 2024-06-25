@@ -7,7 +7,7 @@ import (
 
 	"ascii_art/map_rune_art"
 	"ascii_art/print_ascii"
-	"ascii_art/read_files"
+	"ascii_art/process_files"
 )
 
 var (
@@ -35,7 +35,7 @@ func main() {
 		return
 	}
 
-	lines, read_lines_err = read_files.ReadFiles(bytes, read_err, lines)
+	lines, read_lines_err = process_files.ProcessFiles(bytes, read_err, lines)
 	if read_lines_err {
 		return
 	}
