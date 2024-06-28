@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"os/exec"
 	"strings"
 
 	"ascii_art/map_rune_art"
@@ -29,6 +31,11 @@ func allSlashN(str_splitted []string) bool {
 }
 
 func main() {
+	cmd := exec.Command("gofmt", "-s", "-w", ".")
+	if err := cmd.Run(); err != nil {
+		log.Fatal(err)
+	}
+
 	// providing an error message if string is not provided (no enough arguments)
 	if len(os.Args) < 2 {
 		fmt.Println("No enough arguments!! Please provide the text to be printed :)")

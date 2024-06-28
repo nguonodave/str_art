@@ -11,7 +11,7 @@ import (
 )
 
 func print_usage() {
-	fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard") 
+	fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")
 }
 
 func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
