@@ -19,6 +19,8 @@ var (
 	lines              []string
 	char_art_map       = make(map[rune][]string)
 	current_ascii_char = 32
+	str_input          string
+	args               = os.Args
 )
 
 func allSlashN(str_splitted []string) bool {
@@ -37,7 +39,7 @@ func main() {
 	}
 
 	// providing an error message if string is not provided (no enough arguments)
-	if len(os.Args) < 2 {
+	if len(args) < 2 {
 		fmt.Println("No enough arguments!! Please provide the text to be printed :)")
 		return
 	}
@@ -48,7 +50,11 @@ func main() {
 	}
 
 	// get the string form the command line arguments
-	str_input := os.Args[1]
+	if strings.HasPrefix(args[1], "--output=") && strings.HasSuffix(args[1], ".txt") {
+		str_input = args[2]
+	} else {
+		str_input = args[1]
+	}
 
 	if str_input == "" {
 		return
