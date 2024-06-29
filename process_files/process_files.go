@@ -14,7 +14,17 @@ func print_usage() {
 	fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")
 }
 
+func valid_file(s string, arr []string) bool {
+	for _, str := range arr {
+		if s == str {
+			return true
+		}
+	}
+	return false
+}
+
 func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
+	valid_files := []string{"standard", "shadow", "thinkertoy"}
 	var file_path string
 	var original_hash string
 	banners_dir := "banners/"
@@ -40,7 +50,7 @@ func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool)
 	} else if os.Args[2] == "thinkertoy" {
 		file_path = banners_dir + "thinkertoy.txt"
 		original_hash = "64285e4960d199f4819323c4dc6319ba34f1f0dd9da14d07111345f5d76c3fa3"
-	} else if os.Args[2] != "thinkertoy" {
+	} else if !valid_file(os.Args[2], valid_files) {
 		fmt.Println("Invalid banner file. Use either standard, shadow, or thinkertoy")
 		return nil, true
 	} else {
