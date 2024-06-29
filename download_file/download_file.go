@@ -23,7 +23,7 @@ func DownloadFile(file_path string) {
 
 	resp, resp_err := http.Get(url)
 	if resp_err != nil {
-		log.Fatalf("Error getting body from %s", url)
+		log.Fatalf("Check your connection. Error getting content from:\n%s", url)
 	}
 	defer resp.Body.Close()
 
