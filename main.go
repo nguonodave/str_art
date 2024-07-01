@@ -10,6 +10,7 @@ import (
 	"ascii_art/map_rune_art"
 	"ascii_art/print_ascii"
 	"ascii_art/process_files"
+	"ascii_art/write_output"
 )
 
 var (
@@ -76,15 +77,20 @@ func main() {
 	}
 
 	map_rune_art.MapRuneArt(lines, char_art_map, current_ascii_char)
-
 	for _, str_item := range str_splitted {
-		// if str_item == "" && i < len(str_splitted)-1 {
-		// 	fmt.Println()
-		// }
-		if str_item != "" {
-			print_ascii.PrintAscii(char_art_map, str_item)
+		if strings.HasPrefix(args[1], "--output=") && strings.HasSuffix(args[1], ".txt") {
+			file, out_file_err := os.Create(args[1][9:])
+			if out_file_err != nil {
+				log.Fatal(out_file_err)
+			}
+			fmt.Println(str_item)
+			write_output.WriteOutput(char_art_map, str_item, file)
 		} else {
-			fmt.Println()
+			if str_item != "" {
+				print_ascii.PrintAscii(char_art_map, str_item)
+			} else {
+				fmt.Println()
+			}
 		}
 	}
 }
