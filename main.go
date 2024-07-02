@@ -22,6 +22,8 @@ var (
 	current_ascii_char = 32
 	str_input          string
 	args               = os.Args
+	file               *os.File
+	out_file_err       error
 )
 
 func allSlashN(str_splitted []string) bool {
@@ -78,9 +80,10 @@ func main() {
 
 	map_rune_art.MapRuneArt(lines, char_art_map, current_ascii_char)
 
-	file, out_file_err := os.Create(args[1][9:])
-	if out_file_err != nil {
-		log.Fatal(out_file_err)
+	if strings.HasPrefix(args[1], "--output=") && strings.HasSuffix(args[1], ".txt") {
+		if file, out_file_err = os.Create(args[1][9:]); out_file_err != nil {
+			log.Fatal(out_file_err)
+		}
 	}
 
 	for _, str_item := range str_splitted {
