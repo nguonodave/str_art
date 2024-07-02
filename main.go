@@ -77,13 +77,14 @@ func main() {
 	}
 
 	map_rune_art.MapRuneArt(lines, char_art_map, current_ascii_char)
+
+	file, out_file_err := os.Create(args[1][9:])
+	if out_file_err != nil {
+		log.Fatal(out_file_err)
+	}
+
 	for _, str_item := range str_splitted {
 		if strings.HasPrefix(args[1], "--output=") && strings.HasSuffix(args[1], ".txt") {
-			file, out_file_err := os.Create(args[1][9:])
-			if out_file_err != nil {
-				log.Fatal(out_file_err)
-			}
-			fmt.Println(str_item)
 			write_output.WriteOutput(char_art_map, str_item, file)
 		} else {
 			if str_item != "" {
