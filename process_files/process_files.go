@@ -14,6 +14,10 @@ func print_usage() {
 	fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")
 }
 
+func print_output_usage() {
+	fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER]\n\nEX: go run . --output=<fileName.txt> something standard")
+}
+
 func valid_file(s string, arr []string) bool {
 	for _, str := range arr {
 		if s == str {
@@ -49,7 +53,7 @@ func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool)
 		} else if len(args) == 3 {
 			file_arg = "standard"
 		} else {
-			print_usage()
+			print_output_usage()
 			return nil, true
 		}
 	} else {
