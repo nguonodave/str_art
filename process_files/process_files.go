@@ -8,6 +8,7 @@ import (
 
 	"ascii_art/download_file"
 	"ascii_art/file_integrity"
+	"ascii_art/write_output"
 )
 
 func print_usage() {
@@ -32,12 +33,12 @@ func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool)
 		}
 	}
 
-	if (!strings.HasPrefix(args[1], "--output=") || !strings.HasSuffix(args[1], ".txt")) && len(args) > 3 {
+	if !write_output.IsValidOutputFlag(args[1]) && len(args) > 3 {
 		print_usage()
 		return nil, true
 	}
 
-	if strings.HasPrefix(args[1], "--output=") && strings.HasSuffix(args[1], ".txt") {
+	if write_output.IsValidOutputFlag(args[1]) {
 		if len(args) == 4 {
 			file_arg = args[3]
 		} else if len(args) == 3 {

@@ -53,7 +53,7 @@ func main() {
 	}
 
 	// get the string form the command line arguments
-	if strings.HasPrefix(args[1], "--output=") && strings.HasSuffix(args[1], ".txt") {
+	if write_output.IsValidOutputFlag(args[1]) {
 		str_input = args[2]
 	} else {
 		str_input = args[1]
@@ -80,14 +80,14 @@ func main() {
 
 	map_rune_art.MapRuneArt(lines, char_art_map, current_ascii_char)
 
-	if strings.HasPrefix(args[1], "--output=") && strings.HasSuffix(args[1], ".txt") {
+	if write_output.IsValidOutputFlag(args[1]) {
 		if file, out_file_err = os.Create(args[1][9:]); out_file_err != nil {
 			log.Fatal(out_file_err)
 		}
 	}
 
 	for _, str_item := range str_splitted {
-		if strings.HasPrefix(args[1], "--output=") && strings.HasSuffix(args[1], ".txt") {
+		if write_output.IsValidOutputFlag(args[1]) {
 			write_output.WriteOutput(char_art_map, str_item, file)
 		} else {
 			if str_item != "" {
