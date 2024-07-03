@@ -10,6 +10,7 @@ func ValidOutputFlag(arg string) bool {
 	return strings.HasPrefix(arg, "--output=") && strings.HasSuffix(arg, ".txt")
 }
 
+// WriteOutput stores the string art to a specified file.
 func WriteOutput(char_art_map map[rune][]string, str_item string, file io.Writer) {
 	for i := 0; i < 8; i++ {
 		for _, char := range str_item {
