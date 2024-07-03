@@ -5,6 +5,8 @@ import (
 	"encoding/hex"
 )
 
+// FileAltered returns true if the any of the banner files in use is corrupted.
+// A file is consdered corrupted if it's contents are altered (deleted or added content)
 func FileAltered(file_bytes []byte, original_hash string) bool {
 	hash_object := sha256.New()
 

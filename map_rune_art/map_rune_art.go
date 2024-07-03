@@ -1,5 +1,6 @@
 package map_rune_art
 
+// MapRuneArt maps all the ascii printable charcters to their font arts.
 func MapRuneArt(lines []string, char_art_map map[rune][]string, current_ascii_char int) {
 	/*
 		MAPPING EACH ART CHARACTER TO A RUNE

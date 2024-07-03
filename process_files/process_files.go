@@ -11,14 +11,18 @@ import (
 	"ascii_art/write_output"
 )
 
+// print_usage dipalays the usage for ascii-art.
 func print_usage() {
 	fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")
 }
 
+// print_output_usage dipalays the usage for ascii-art-output.
 func print_output_usage() {
 	fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER]\n\nEX: go run . --output=<fileName.txt> something standard")
 }
 
+// ProcessFiles reads and returns the lines of the valid banner files.
+// Returns true if an error is encountered.
 func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
 	args := os.Args
 	var file_arg string
@@ -26,6 +30,7 @@ func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool)
 	var original_hash string
 	banners_dir := "banners/"
 
+	// create the banners directory if it does not exist.
 	if _, banners_err := os.Stat(banners_dir); os.IsNotExist(banners_err) {
 		create_banners_err := os.Mkdir("banners", 0o700)
 		if create_banners_err != nil {
@@ -38,6 +43,7 @@ func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool)
 		return nil, true
 	}
 
+	// get the file based on the accepted provided arguments.
 	if write_output.ValidOutputFlag(args[1]) {
 		if len(args) == 4 {
 			file_arg = args[3]
@@ -55,6 +61,7 @@ func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool)
 		}
 	}
 
+	// define files and their hash values.
 	if file_arg == "standard" {
 		file_path = banners_dir + "standard.txt"
 		original_hash = "e194f1033442617ab8a78e1ca63a2061f5cc07a3f05ac226ed32eb9dfd22a6bf"
@@ -73,7 +80,7 @@ func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool)
 
 	file_altered := file_integrity.FileAltered(bytes, original_hash)
 
-	// download original file if it doesn't exist or is altered
+	// download original file if it doesn't exist or is altered.
 	if _, file_err := os.Stat(file_path); os.IsNotExist(file_err) || file_altered {
 		fmt.Println("File(s) missing or data probably altered.\nDownloading the original version...")
 		fmt.Println()
