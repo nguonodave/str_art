@@ -26,7 +26,7 @@ var (
 	out_file_err       error
 )
 
-func allSlashN(str_splitted []string) bool {
+func all_slashn(str_splitted []string) bool {
 	for _, str := range str_splitted {
 		if len(str) != 0 {
 			return false
@@ -53,7 +53,7 @@ func main() {
 	}
 
 	// get the string form the command line arguments
-	if write_output.IsValidOutputFlag(args[1]) {
+	if write_output.ValidOutputFlag(args[1]) {
 		str_input = args[2]
 	} else {
 		str_input = args[1]
@@ -73,21 +73,21 @@ func main() {
 	// then split the final string using '\n'
 	str_splitted := strings.Split(str_input, "\\n")
 
-	if allSlashN(str_splitted) {
+	if all_slashn(str_splitted) {
 		fmt.Print(strings.Repeat("\n", len(str_splitted)-1))
 		return
 	}
 
 	map_rune_art.MapRuneArt(lines, char_art_map, current_ascii_char)
 
-	if write_output.IsValidOutputFlag(args[1]) {
+	if write_output.ValidOutputFlag(args[1]) {
 		if file, out_file_err = os.Create(args[1][9:]); out_file_err != nil {
 			log.Fatal(out_file_err)
 		}
 	}
 
 	for _, str_item := range str_splitted {
-		if write_output.IsValidOutputFlag(args[1]) {
+		if write_output.ValidOutputFlag(args[1]) {
 			write_output.WriteOutput(char_art_map, str_item, file)
 		} else {
 			if str_item != "" {

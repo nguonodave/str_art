@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func IsValidOutputFlag(arg string) bool {
+func ValidOutputFlag(arg string) bool {
 	return strings.HasPrefix(arg, "--output=") && strings.HasSuffix(arg, ".txt")
 }
 

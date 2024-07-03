@@ -33,12 +33,12 @@ func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool)
 		}
 	}
 
-	if !write_output.IsValidOutputFlag(args[1]) && len(args) > 3 {
+	if !write_output.ValidOutputFlag(args[1]) && len(args) > 3 {
 		print_usage()
 		return nil, true
 	}
 
-	if write_output.IsValidOutputFlag(args[1]) {
+	if write_output.ValidOutputFlag(args[1]) {
 		if len(args) == 4 {
 			file_arg = args[3]
 		} else if len(args) == 3 {
