@@ -84,7 +84,7 @@ The following is the allowed usage:
 
 # Credits
 
-This project was inspired by the [01 Talent](https://01talent.com/) pedagogy at [Zone01 Kisumu](https://www.zone01kisumu.ke/), Kenya.
+This project was inspired by the [01 Talent](https://01talent.com/) pedagogy at [Zone01 Kisumu](https://www.zone01kisumu.ke/) campus in Kenya.
 
 # Contribution
 
