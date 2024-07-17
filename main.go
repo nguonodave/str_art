@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"strings"
 
+	"ascii_art/get_file_arg"
 	"ascii_art/map_rune_art"
 	"ascii_art/print_ascii"
 	"ascii_art/process_files"
@@ -22,7 +23,7 @@ var (
 	current_ascii_char = 32
 	str_input          string
 	args               = os.Args
-	file               *os.File // the file where the string arts are written to.
+	out_file           *os.File // the file where the string arts are written to.
 	out_file_err       error
 )
 
@@ -62,10 +63,18 @@ func main() {
 		return
 	}
 
-	lines, read_lines_err = process_files.ProcessFiles(bytes, read_err, lines)
+	// call func for getting file here then pass it in process files
+	file_to_use, get_file_err := get_file_arg.GetFileArg(args)
+	if get_file_err {
+		return
+	}
+
+	lines, read_lines_err = process_files.ProcessFiles(bytes, read_err, lines, file_to_use)
 	if read_lines_err {
 		return
 	}
+
+	// call func for getting string here
 
 	// get the string form the command line arguments, based on the arguments.
 	if write_output.ValidOutputFlag(args[1]) {
@@ -101,7 +110,7 @@ func main() {
 
 	// only create the file if the output flag is valid.
 	if write_output.ValidOutputFlag(args[1]) {
-		if file, out_file_err = os.Create(args[1][9:]); out_file_err != nil {
+		if out_file, out_file_err = os.Create(args[1][9:]); out_file_err != nil {
 			log.Fatal(out_file_err)
 		}
 	}
@@ -109,7 +118,7 @@ func main() {
 	// display results based on the conditions.
 	for _, str_item := range str_splitted {
 		if write_output.ValidOutputFlag(args[1]) {
-			write_output.WriteOutput(char_art_map, str_item, file)
+			write_output.WriteOutput(char_art_map, str_item, out_file)
 		} else {
 			if str_item != "" {
 				print_ascii.PrintAscii(char_art_map, str_item)
