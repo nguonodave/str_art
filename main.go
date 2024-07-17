@@ -52,6 +52,27 @@ func handle_newline(s string) string {
 	return new_str
 }
 
+func check_nonprintable_chars(s string) {
+	// check for non-printable ascii characters.
+	for _, char := range s {
+		if char > 126 || char < 32 {
+			fmt.Println("Non-ascii printable characters encountered. Please provide only ascii printable characters in your string :)")
+			return
+		}
+	}
+}
+
+func get_str_input() string {
+	// get the string form the command line arguments, based on the arguments.
+	if write_output.ValidOutputFlag(args[1]) {
+		str_input = args[2]
+	} else {
+		str_input = args[1]
+	}
+
+	return str_input
+}
+
 func main() {
 	cmd := exec.Command("gofmt", "-s", "-w", ".")
 	if err := cmd.Run(); err != nil {
@@ -63,7 +84,7 @@ func main() {
 		return
 	}
 
-	// call func for getting file here then pass it in process files
+	// call func for getting file, then pass it in the ProcessFiles function
 	file_to_use, get_file_err := get_file_arg.GetFileArg(args)
 	if get_file_err {
 		return
@@ -74,14 +95,8 @@ func main() {
 		return
 	}
 
-	// call func for getting string here
-
-	// get the string form the command line arguments, based on the arguments.
-	if write_output.ValidOutputFlag(args[1]) {
-		str_input = args[2]
-	} else {
-		str_input = args[1]
-	}
+	// call func for getting string
+	str_input = get_str_input()
 
 	if str_input == "" {
 		return
@@ -89,13 +104,7 @@ func main() {
 
 	str_input = handle_newline(str_input)
 
-	// check for non-printable ascii characters.
-	for _, char := range str_input {
-		if char > 126 || char < 32 {
-			fmt.Println("Non-ascii printable characters encountered. Please provide only ascii printable characters in your string :)")
-			return
-		}
-	}
+	check_nonprintable_chars(str_input)
 
 	// then split the final string using '\n'.
 	str_splitted := strings.Split(str_input, "\\n")
