@@ -85,12 +85,12 @@ func main() {
 	}
 
 	// call func for getting file, then pass it in the ProcessFiles function
-	file_to_use, get_file_err := get_file_arg.GetFileArg(args)
+	banner, get_file_err := get_file_arg.GetFileArg(args)
 	if get_file_err {
 		return
 	}
 
-	lines, read_lines_err = process_files.ProcessFiles(bytes, read_err, lines, file_to_use)
+	lines, read_lines_err = process_files.ProcessFiles(bytes, read_err, lines, banner)
 	if read_lines_err {
 		return
 	}
