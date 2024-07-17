@@ -37,6 +37,20 @@ func all_slashn(str_splitted []string) bool {
 	return true
 }
 
+func handle_newline(s string) string {
+	new_str := ""
+
+	for _, char := range s {
+		if char == '\n' {
+			new_str += "\\n"
+		} else {
+			new_str += string(char)
+		}
+	}
+
+	return new_str
+}
+
 func main() {
 	cmd := exec.Command("gofmt", "-s", "-w", ".")
 	if err := cmd.Run(); err != nil {
@@ -63,6 +77,8 @@ func main() {
 	if str_input == "" {
 		return
 	}
+
+	str_input = handle_newline(str_input)
 
 	// check for non-printable ascii characters.
 	for _, char := range str_input {
