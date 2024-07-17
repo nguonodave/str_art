@@ -38,7 +38,7 @@ func all_slashn(str_splitted []string) bool {
 	return true
 }
 
-func handle_newline(s string) string {
+func escape_newline(s string) string {
 	new_str := ""
 
 	for _, char := range s {
@@ -102,7 +102,7 @@ func main() {
 		return
 	}
 
-	str_input = handle_newline(str_input)
+	str_input = escape_newline(str_input)
 
 	check_nonprintable_chars(str_input)
 
