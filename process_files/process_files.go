@@ -8,24 +8,14 @@ import (
 
 	"ascii_art/download_file"
 	"ascii_art/file_integrity"
+	"ascii_art/usage"
 	"ascii_art/write_output"
 )
 
-// print_usage dipalays the usage for ascii-art.
-func print_usage() {
-	fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")
-}
-
-// print_output_usage dipalays the usage for ascii-art-output.
-func print_output_usage() {
-	fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER]\n\nEX: go run . --output=<fileName.txt> something standard")
-}
-
 // ProcessFiles reads and returns the lines of the valid banner files.
 // Returns true if an error is encountered.
-func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool) {
+func ProcessFiles(bytes []byte, read_err error, lines []string, file_arg string) ([]string, bool) {
 	args := os.Args
-	var file_arg string
 	var file_path string
 	var original_hash string
 	banners_dir := "banners/"
@@ -39,26 +29,8 @@ func ProcessFiles(bytes []byte, read_err error, lines []string) ([]string, bool)
 	}
 
 	if !write_output.ValidOutputFlag(args[1]) && len(args) > 3 {
-		print_usage()
+		usage.PrintUsage()
 		return nil, true
-	}
-
-	// get the file based on the accepted provided arguments.
-	if write_output.ValidOutputFlag(args[1]) {
-		if len(args) == 4 {
-			file_arg = strings.ToLower(args[3])
-		} else if len(args) == 3 {
-			file_arg = "standard"
-		} else {
-			print_output_usage()
-			return nil, true
-		}
-	} else {
-		if len(args) == 3 {
-			file_arg = strings.ToLower(args[2])
-		} else if len(args) == 2 {
-			file_arg = "standard"
-		}
 	}
 
 	// define files and their hash values.
