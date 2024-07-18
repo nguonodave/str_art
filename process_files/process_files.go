@@ -54,7 +54,7 @@ func ProcessFiles(bytes []byte, read_err error, lines []string, file_arg string)
 
 	// download original file if it doesn't exist or is altered.
 	if _, file_err := os.Stat(file_path); os.IsNotExist(file_err) || file_altered {
-		fmt.Println("File(s) missing or data probably altered.\nDownloading the original version...")
+		fmt.Printf("The file "+"\033[31m"+"%s.txt"+"\033[0m"+" is missing, or it's data has probably been altered.\nDownloading the original version...\n", file_arg)
 		fmt.Println()
 		download_file.DownloadFile(file_path)
 		return nil, true
