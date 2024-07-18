@@ -2,6 +2,7 @@ package tools
 
 import (
 	"fmt"
+	"net/http"
 
 	"ascii_art/vars"
 	"ascii_art/write_output"
@@ -51,4 +52,24 @@ func GetStrInput() string {
 	}
 
 	return vars.Str_input
+}
+
+func PageNotFound(page string) bool {
+	for _, v := range vars.Pages {
+		if v == page {
+			return false
+		}
+	}
+
+	return true
+}
+
+func HomeOr404Page(w http.ResponseWriter, r *http.Request) {
+	path := r.URL.Path[1:]
+
+	if len(path) > 0 && PageNotFound(path) {
+		vars.Template_404.Execute(w, nil)
+	} else {
+		vars.Home_template.ExecuteTemplate(w, "home.html", nil)
+	}
 }

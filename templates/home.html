@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+
+    <form action="/ascii-art" method="POST">
+
+        <!-- <textarea name="str" id="str" cols="30" rows="10" placeholder="Enter the text to be displayed" required></textarea><br><br> -->
+        <input type="text" id="str" name="str" placeholder="Enter the text to be displayed" required>
+
+        <label for="banner"><h3>Select banner:</h3></label>
+        <label for="Standard">Standard</label>
+        <input type="radio" id="Standard" value="Standard" name="banner"><br>
+        <label for="Shadow">Shadow</label>
+        <input type="radio" id="Shadow" value="Shadow" name="banner"><br>
+        <label for="Thinkertoy">Thinkertoy</label>
+        <input type="radio" id="Thinkertoy" value="Thinkertoy" name="banner"><br><br>
+
+        <input type="reset" value="Refresh"><br><br>
+        <input type="submit" value="Create Art">
+
+    </form>
+
+</body>
+</html>

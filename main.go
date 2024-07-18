@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os/exec"
 
 	"ascii_art/for_terminal"
+	"ascii_art/for_web"
 	"ascii_art/vars"
 )
 
@@ -16,9 +16,7 @@ func main() {
 	}
 
 	if len(vars.Args) < 2 {
-		// later, this is where the web functionality will run
-		fmt.Println("No enough arguments!! Please provide the text to be printed :)")
-		return
+		for_web.ForWeb()
 	} else {
 		for_terminal.ForTerminal()
 	}
