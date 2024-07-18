@@ -5,13 +5,8 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"strings"
 
-	"ascii_art/ascii_art_result"
-	"ascii_art/get_file_arg"
-	"ascii_art/map_rune_art"
-	"ascii_art/process_files"
-	"ascii_art/write_output"
+	"ascii_art/for_terminal"
 )
 
 var (
@@ -27,52 +22,6 @@ var (
 	out_file_err       error
 )
 
-// all_slashn returns true if all string arguments are new line characters.
-// Otherwise it returns false.
-func AllSlashn(str_splitted []string) bool {
-	for _, str := range str_splitted {
-		if len(str) != 0 {
-			return false
-		}
-	}
-	return true
-}
-
-func EscapeNewline(s string) string {
-	new_str := ""
-
-	for _, char := range s {
-		if char == '\n' {
-			new_str += "\\n"
-		} else {
-			new_str += string(char)
-		}
-	}
-
-	return new_str
-}
-
-func CheckNonPrintableChars(s string) {
-	// check for non-printable ascii characters.
-	for _, char := range s {
-		if char > 126 || char < 32 {
-			fmt.Println("Non-ascii printable characters encountered. Please provide only ascii printable characters in your string :)")
-			return
-		}
-	}
-}
-
-func GetStrInput() string {
-	// get the string form the command line arguments, based on the arguments.
-	if write_output.ValidOutputFlag(args[1]) {
-		str_input = args[2]
-	} else {
-		str_input = args[1]
-	}
-
-	return str_input
-}
-
 func main() {
 	cmd := exec.Command("gofmt", "-s", "-w", ".")
 	if err := cmd.Run(); err != nil {
@@ -80,42 +29,10 @@ func main() {
 	}
 
 	if len(args) < 2 {
+		// later, this is where the web functionality will run
 		fmt.Println("No enough arguments!! Please provide the text to be printed :)")
 		return
+	} else {
+		for_terminal.ForTerminal()
 	}
-
-	// call func for getting file, then pass it in the ProcessFiles function
-	banner, get_file_err := get_file_arg.GetFileArg(args)
-	if get_file_err {
-		return
-	}
-
-	lines, read_lines_err = process_files.ProcessFiles(bytes, read_err, lines, banner)
-	if read_lines_err {
-		return
-	}
-
-	// call func for getting string
-	str_input = GetStrInput()
-
-	if str_input == "" {
-		return
-	}
-
-	str_input = EscapeNewline(str_input)
-
-	CheckNonPrintableChars(str_input)
-
-	// then split the final string using '\n'.
-	str_splitted := strings.Split(str_input, "\\n")
-
-	if AllSlashn(str_splitted) {
-		fmt.Print(strings.Repeat("\n", len(str_splitted)-1))
-		return
-	}
-
-	// map all the provided ascii printable characters to their arts.
-	map_rune_art.MapRuneArt(lines, char_art_map, current_ascii_char)
-
-	ascii_art_result.AsciiArtResult(out_file, out_file_err, str_splitted, char_art_map)
 }
