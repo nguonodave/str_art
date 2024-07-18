@@ -8,6 +8,6 @@ func PrintUsage() {
 }
 
 // print_output_usage dipalays the usage for ascii-art-output.
-func PrintOutputUusage() {
+func PrintOutputUsage() {
 	fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER]\n\nEX: go run . --output=<fileName.txt> something standard")
 }

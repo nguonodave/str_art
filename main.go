@@ -7,9 +7,9 @@ import (
 	"os/exec"
 	"strings"
 
+	"ascii_art/ascii_art_result"
 	"ascii_art/get_file_arg"
 	"ascii_art/map_rune_art"
-	"ascii_art/print_ascii"
 	"ascii_art/process_files"
 	"ascii_art/write_output"
 )
@@ -117,23 +117,5 @@ func main() {
 	// map all the provided ascii printable characters to their arts.
 	map_rune_art.MapRuneArt(lines, char_art_map, current_ascii_char)
 
-	// only create the file if the output flag is valid.
-	if write_output.ValidOutputFlag(args[1]) {
-		if out_file, out_file_err = os.Create(args[1][9:]); out_file_err != nil {
-			log.Fatal(out_file_err)
-		}
-	}
-
-	// display results based on the conditions.
-	for _, str_item := range str_splitted {
-		if write_output.ValidOutputFlag(args[1]) {
-			write_output.WriteOutput(char_art_map, str_item, out_file)
-		} else {
-			if str_item != "" {
-				print_ascii.PrintAscii(char_art_map, str_item)
-			} else {
-				fmt.Println()
-			}
-		}
-	}
+	ascii_art_result.AsciiArtResult(out_file, out_file_err, str_splitted, char_art_map)
 }

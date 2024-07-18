@@ -17,7 +17,7 @@ func GetFileArg(args []string) (string, bool) {
 		} else if len(args) == 3 {
 			file_arg = "standard"
 		} else {
-			usage.PrintOutputUusage()
+			usage.PrintOutputUsage()
 			return "", true
 		}
 	} else {
