@@ -29,7 +29,7 @@ var (
 
 // all_slashn returns true if all string arguments are new line characters.
 // Otherwise it returns false.
-func all_slashn(str_splitted []string) bool {
+func AllSlashn(str_splitted []string) bool {
 	for _, str := range str_splitted {
 		if len(str) != 0 {
 			return false
@@ -38,7 +38,7 @@ func all_slashn(str_splitted []string) bool {
 	return true
 }
 
-func escape_newline(s string) string {
+func EscapeNewline(s string) string {
 	new_str := ""
 
 	for _, char := range s {
@@ -52,7 +52,7 @@ func escape_newline(s string) string {
 	return new_str
 }
 
-func check_nonprintable_chars(s string) {
+func CheckNonPrintableChars(s string) {
 	// check for non-printable ascii characters.
 	for _, char := range s {
 		if char > 126 || char < 32 {
@@ -62,7 +62,7 @@ func check_nonprintable_chars(s string) {
 	}
 }
 
-func get_str_input() string {
+func GetStrInput() string {
 	// get the string form the command line arguments, based on the arguments.
 	if write_output.ValidOutputFlag(args[1]) {
 		str_input = args[2]
@@ -96,20 +96,20 @@ func main() {
 	}
 
 	// call func for getting string
-	str_input = get_str_input()
+	str_input = GetStrInput()
 
 	if str_input == "" {
 		return
 	}
 
-	str_input = escape_newline(str_input)
+	str_input = EscapeNewline(str_input)
 
-	check_nonprintable_chars(str_input)
+	CheckNonPrintableChars(str_input)
 
 	// then split the final string using '\n'.
 	str_splitted := strings.Split(str_input, "\\n")
 
-	if all_slashn(str_splitted) {
+	if AllSlashn(str_splitted) {
 		fmt.Print(strings.Repeat("\n", len(str_splitted)-1))
 		return
 	}
