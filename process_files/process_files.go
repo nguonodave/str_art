@@ -44,7 +44,7 @@ func ProcessFiles(bytes []byte, read_err error, lines []string, file_arg string)
 		file_path = banners_dir + "thinkertoy.txt"
 		original_hash = "64285e4960d199f4819323c4dc6319ba34f1f0dd9da14d07111345f5d76c3fa3"
 	} else {
-		fmt.Printf("%s is an unsupported banner file. Use either standard, shadow, or thinkertoy\n", file_arg)
+		fmt.Printf("\033[31m"+"%s"+"\033[0m"+" is an unsupported banner file. Use either standard, shadow, or thinkertoy\n", file_arg)
 		return nil, true
 	}
 
