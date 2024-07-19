@@ -1,12 +1,13 @@
 package for_web
 
 import (
-	"ascii_art/art_server"
-	"ascii_art/tools"
-	"ascii_art/vars"
 	"fmt"
 	"html/template"
 	"net/http"
+
+	"ascii_art/art_server"
+	"ascii_art/tools"
+	"ascii_art/vars"
 )
 
 func ForWeb() {
@@ -17,6 +18,9 @@ func ForWeb() {
 
 	http.HandleFunc("/", tools.HomeOr404Page)
 	http.HandleFunc("/ascii-art", art_server.Art)
+
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static", fs))
 
 	fmt.Println("Listening on :8001...")
 
