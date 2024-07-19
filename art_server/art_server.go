@@ -1,7 +1,6 @@
 package art_server
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -21,7 +20,8 @@ func Art(w http.ResponseWriter, r *http.Request) {
 
 	vars.Lines, vars.Read_lines_err = process_files.ProcessFiles(vars.Bytes, vars.Read_err, vars.Lines, banner)
 	if vars.Read_lines_err {
-		fmt.Println("sssss")
+		art = "The file " + banner + ".txt" + " is missing, or it's data has probably been altered.\nA newer version has been downloaded successfully. Please re-run the program"
+		vars.Art_template.ExecuteTemplate(w, "ascii-art.html", art)
 		return
 	}
 
