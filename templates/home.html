@@ -1,32 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
 </head>
+
 <body>
-
-    <section class="container">
-        <form action="/ascii-art" method="POST">
-
-            <!-- <textarea name="str" id="str" cols="30" rows="10" placeholder="Enter the text to be displayed" required></textarea><br><br> -->
-            <input type="text" id="str" name="str" placeholder="Enter the text to be displayed" required>
-    
-            <label for="banner"><h3>Select banner:</h3></label>
-            <label for="Standard">Standard</label>
-            <input type="radio" id="Standard" value="Standard" name="banner"><br>
-            <label for="Shadow">Shadow</label>
-            <input type="radio" id="Shadow" value="Shadow" name="banner"><br>
-            <label for="Thinkertoy">Thinkertoy</label>
-            <input type="radio" id="Thinkertoy" value="Thinkertoy" name="banner"><br><br>
-    
-            <input type="reset" value="Refresh"><br><br>
-            <input type="submit" value="Create Art">
-    
-        </form>
+  <div class="body-container">
+    <section class="nav-bar">
+      <div class="logo">
+        <p>ASCII<span>ART</span>WEB</p>
+      </div>
     </section>
 
+    <section class="form-container">
+      <form action="/ascii-art" method="POST">
+        <!-- <textarea name="str" id="str" cols="30" rows="10" placeholder="Enter the text to be displayed" class="str" required></textarea><br><br> -->
+        <input type="text" id="str" name="str" placeholder="Enter the text to be displayed" class="str" required />
+
+        <div class="select-banner">
+          <h3>Select banner:</h3>
+        </div>
+
+        <div class="banners">
+          <label for="standard" class="radio pointer">
+            Standard
+            <input type="radio" class="radio-input pointer" value="Standard" id="standard" name="banner" /><br />
+            <div class="circle"></div>
+          </label>
+
+          <label for="shadow" class="radio pointer">
+            Shadow
+            <input type="radio" class="radio-input pointer" value="Shadow" id="shadow" name="banner" /><br />
+            <div class="circle"></div>
+          </label>
+
+          <label for="thinkertoy" class="radio pointer">
+            Thinkertoy
+            <input type="radio" class="radio-input pointer" value="Thinkertoy" id="thinkertoy" name="banner" /><br />
+            <div class="circle"></div>
+          </label>
+          
+        </div>
+
+        <input type="reset" value="Refresh" class="buttons" /><br /><br />
+        <input type="submit" value="Create Art" class="buttons" />
+      </form>
+    </section>
+  </div>
 </body>
+
 </html>
