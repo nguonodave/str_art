@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* font-family: sans-serif; */
 }
 
 .pointer {
@@ -30,12 +29,10 @@
 }
 
 .form-container{
+    top: 7vh;
     position: relative;
     /* background-color: royalblue; */
     height: 93vh;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     text-align: center;
     padding: 5rem;
 }
@@ -76,7 +73,6 @@
     /* background-color: purple; */
     display: flex;
     align-items: center;
-    /* justify-content: center; */
     flex-direction: column;
     padding: 10px;
     margin-bottom: 10rem;
@@ -88,7 +84,6 @@
     align-items: center;
     margin-right: 10px;
     color: rgb(85, 85, 85);
-    /* position: relative; */
 }
 
 .radio-input {
@@ -130,4 +125,35 @@
     cursor: pointer;
     font-size: 15px;
     letter-spacing: 2px;
+}
+
+.result-container{
+    position: relative;
+    /* background-color: royalblue; */
+    height: 80vh;
+    padding: 5rem;
+}
+
+.result-heading {
+    height: 13vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    color: rgb(85, 85, 85);
+    /* background-color: aqua; */
+}
+
+.art {
+    /* background-color: yellow; */
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    overflow: auto;
+    padding: 10px;
+    border: 2px rgb(85, 85, 85) solid;
+    border-radius: 10px;
 }
