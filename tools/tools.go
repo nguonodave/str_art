@@ -68,8 +68,8 @@ func HomeOr404Page(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path[1:]
 
 	if len(path) > 0 && PageNotFound(path) {
-		vars.Template_404.Execute(w, nil)
+		vars.All_templates.ExecuteTemplate(w, "404.html", nil)
 	} else {
-		vars.Home_template.ExecuteTemplate(w, "home.html", nil)
+		vars.All_templates.ExecuteTemplate(w, "home.html", nil)
 	}
 }
