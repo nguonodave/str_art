@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ascii art</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
 </head>
+
 <body>
-    <h1>Art result</h1>
-    <pre>{{.}}</pre>
-    <!-- <p>{{.Banner}}</p> -->
+    <div class="body-container">
+        {{template "Nav"}}
+
+        <dov class="art">
+            <h1>Art result</h1>
+            <pre>{{.}}</pre>
+        </dov>
+    </div>
 </body>
+
 </html>

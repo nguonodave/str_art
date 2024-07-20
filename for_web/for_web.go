@@ -12,9 +12,9 @@ import (
 
 func ForWeb() {
 	// asigning the template variables to their respective template files
-	vars.Home_template, _ = template.ParseFiles("templates/home.html")
-	vars.Art_template, _ = template.ParseFiles("templates/ascii-art.html")
-	vars.Template_404, _ = template.ParseFiles("templates/404.html")
+	vars.Home_template, _ = template.ParseFiles("templates/home.html", "templates/nav.html")
+	vars.Art_template, _ = template.ParseFiles("templates/ascii-art.html", "templates/nav.html")
+	vars.Template_404, _ = template.ParseFiles("templates/404.html", "templates/nav.html")
 
 	http.HandleFunc("/", tools.HomeOr404Page)
 	http.HandleFunc("/ascii-art", art_server.Art)
