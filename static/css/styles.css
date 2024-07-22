@@ -131,7 +131,7 @@
     position: relative;
     /* background-color: royalblue; */
     height: 80vh;
-    padding: 5rem;
+    padding: 5rem 5rem 0;
 }
 
 .result-heading {
@@ -154,6 +154,6 @@
     padding: 20px;
     overflow: auto;
     padding: 10px;
-    border: 2px rgb(85, 85, 85) solid;
     border-radius: 10px;
+    box-shadow: inset -5px -5px 9px rgba(255,255,255,0.45), inset 5px 5px 9px rgba(94,104,121,0.3);
 }
