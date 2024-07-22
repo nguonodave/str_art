@@ -12,15 +12,18 @@
     <div class="body-container">
         {{template "Nav"}}
         <div class="error-container">
-            <div class="error-heading">
-                <h1>Error encountered</h1>
+            <div class="message-box">
+                <div class="error-heading">
+                    <h1>Error encountered!!!</h1>
+                </div>
+                <div class="error-message">
+                    <p>{{.}}</p>
+                </div>
             </div>
-            <div class="error-message">
-                <p>{{.}}</p>
+
+            <div class="back-btn">
+                <button onclick="history.back()" class="buttons">Go Back</button>
             </div>
-        </div>
-        <div class="back-btn">
-            <button onclick="history.back()" class="buttons">Go Back</button>
         </div>
     </div>
 </body>
