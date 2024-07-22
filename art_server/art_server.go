@@ -20,8 +20,11 @@ func Art(w http.ResponseWriter, r *http.Request) {
 
 	vars.Lines, vars.Read_lines_err = process_files.ProcessFiles(vars.Bytes, vars.Read_err, vars.Lines, banner)
 	if vars.Read_lines_err {
-		art = "The file " + banner + ".txt" + " is missing, or it's data has probably been altered.\nA newer version has been downloaded successfully. Please re-run the program"
-		vars.All_templates.ExecuteTemplate(w, "ascii-art.html", art)
+		if len(banner) == 0 {
+			banner = "standard"
+		}
+		file_err := "The file " + banner + ".txt" + " is missing, or it's data has probably been altered.\nA newer version has been downloaded successfully. Please go back and re-run the program"
+		vars.All_templates.ExecuteTemplate(w, "file-err.html", file_err)
 		return
 	}
 
