@@ -16,11 +16,16 @@ func Art(w http.ResponseWriter, r *http.Request) {
 	banner := strings.ToLower(r.FormValue("banner"))
 	var art string
 
-	tools.CheckNonPrintableChars(str)
+	if non_print_error := tools.CheckNonPrintableChars(str); non_print_error != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		vars.All_templates.ExecuteTemplate(w, "file-err.html", non_print_error)
+		return
+	}
 
 	vars.Lines, vars.Read_lines_err = process_files.ProcessFiles(vars.Bytes, vars.Read_err, vars.Lines, banner)
 	if vars.Read_lines_err != nil {
 		file_err := vars.Read_lines_err
+		w.WriteHeader(http.StatusInternalServerError)
 		vars.All_templates.ExecuteTemplate(w, "file-err.html", file_err)
 		return
 	}
