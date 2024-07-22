@@ -1,7 +1,7 @@
 package process_files
 
 import (
-	"fmt"
+	"errors"
 	"log"
 	"os"
 	"strings"
@@ -12,10 +12,11 @@ import (
 
 // ProcessFiles reads and returns the lines of the valid banner files.
 // Returns true if an error is encountered.
-func ProcessFiles(bytes []byte, read_err error, lines []string, banner string) ([]string, bool) {
+func ProcessFiles(bytes []byte, read_err error, lines []string, banner string) ([]string, error) {
 	// args := os.Args
 	var file_path string
 	var original_hash string
+	var invalid_file_error error
 	banners_dir := "banners/"
 
 	// create the banners directory if it does not exist.
@@ -42,8 +43,9 @@ func ProcessFiles(bytes []byte, read_err error, lines []string, banner string) (
 		file_path = banners_dir + "thinkertoy.txt"
 		original_hash = "64285e4960d199f4819323c4dc6319ba34f1f0dd9da14d07111345f5d76c3fa3"
 	} else {
-		fmt.Printf("\033[31m"+"%s"+"\033[0m"+" is an unsupported banner file. Use either standard, shadow, or thinkertoy\n", banner)
-		return nil, true
+		// fmt.Printf("\033[31m"+"%s"+"\033[0m"+" is an unsupported banner file. Use either standard, shadow, or thinkertoy\n", banner)
+		invalid_file_error = errors.New("\033[31m" + banner + "\033[0m" + " is an unsupported banner file. Use either standard, shadow, or thinkertoy")
+		return nil, invalid_file_error
 	}
 
 	bytes, read_err = os.ReadFile(file_path)
@@ -52,10 +54,10 @@ func ProcessFiles(bytes []byte, read_err error, lines []string, banner string) (
 
 	// download original file if it doesn't exist or is altered.
 	if _, file_err := os.Stat(file_path); os.IsNotExist(file_err) || file_altered {
-		fmt.Printf("The file "+"\033[31m"+"%s.txt"+"\033[0m"+" is missing, or it's data has probably been altered.\nDownloading the original version...\n", banner)
-		fmt.Println()
-		download_file.DownloadFile(file_path)
-		return nil, true
+		// fmt.Printf("The file "+"\033[31m"+"%s.txt"+"\033[0m"+" is missing, or it's data has probably been altered.\nDownloading the original version...\n", banner)
+		banner_error := errors.New("The file " + banner + ".txt" + " is missing, or it's data has probably been altered.\nIf you have internet connection, then the file has been downloaded successfully. Please re-run the program.")
+		_ = download_file.DownloadFile(file_path)
+		return nil, banner_error
 	}
 
 	if banner == "thinkertoy" {
@@ -64,5 +66,5 @@ func ProcessFiles(bytes []byte, read_err error, lines []string, banner string) (
 		lines = strings.Split(string(bytes), "\n")
 	}
 
-	return lines, false
+	return lines, nil
 }
