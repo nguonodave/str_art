@@ -11,16 +11,18 @@
 <body>
     <div class="body-container">
         {{template "Nav"}}
-        <div class="result-heading">
-            <h1>Art result</h1>
-        </div>
-        <div class="result-container">
-            <div class="art">
-                <pre>{{.}}</pre>
+        <div class="gray-back">
+            <div class="result-heading">
+                <h1>Art result</h1>
             </div>
-        </div>
-        <div class="back-btn">
-            <button onclick="history.back()" class="buttons">Go Back</button>
+            <div class="result-container">
+                <div class="art">
+                    <pre>{{.}}</pre>
+                </div>
+            </div>
+            <div class="back-btn">
+                <button onclick="history.back()" class="buttons">Go Back</button>
+            </div>
         </div>
     </div>
 </body>
