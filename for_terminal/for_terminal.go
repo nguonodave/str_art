@@ -20,7 +20,8 @@ func ForTerminal() {
 	}
 
 	vars.Lines, vars.Read_lines_err = process_files.ProcessFiles(vars.Bytes, vars.Read_err, vars.Lines, banner)
-	if vars.Read_lines_err {
+	if vars.Read_lines_err != nil {
+		fmt.Println(vars.Read_lines_err)
 		return
 	}
 

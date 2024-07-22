@@ -1,6 +1,7 @@
 package download_file
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -9,7 +10,8 @@ import (
 )
 
 // DownloadFile downloads the banner file contents and store them in their respective files.
-func DownloadFile(file_path string) {
+func DownloadFile(file_path string) error {
+	var get_error error
 	url := ""
 	switch file_path {
 	case "banners/standard.txt":
@@ -25,7 +27,9 @@ func DownloadFile(file_path string) {
 	// download the body (contents)
 	resp, resp_err := http.Get(url)
 	if resp_err != nil {
-		log.Fatalf("Check your connection. Error getting content from:\n%s", url)
+		// log.Fatalf("Check your connection. Error getting content from:\n%s", url)
+		get_error = errors.New("Check your connection. Error getting content from the provided URL.")
+		return get_error
 	}
 	defer resp.Body.Close()
 
@@ -38,8 +42,9 @@ func DownloadFile(file_path string) {
 	// write the contents to a file.
 	write_err := os.WriteFile(file_path, body, 0o777)
 	if write_err != nil {
-		log.Fatal(write_err)
+		return write_err
 	}
 
 	fmt.Println("File downloaded successfully. Please re-run the program.")
+	return nil
 }
