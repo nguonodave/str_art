@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascii art</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+
+<body>
+    <div class="body-container">
+        {{template "Nav"}}
+        <div class="error-container">
+            <div class="error-heading">
+                <h1>Error encountered</h1>
+            </div>
+            <div class="error-message">
+                <p>{{.}}</p>
+            </div>
+        </div>
+        <div class="back-btn">
+            <button onclick="history.back()" class="buttons">Go Back</button>
+        </div>
+    </div>
+</body>
+
+</html>
