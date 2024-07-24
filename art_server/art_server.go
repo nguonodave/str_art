@@ -1,7 +1,9 @@
 package art_server
 
 import (
+	"fmt"
 	"net/http"
+	"os"
 	"strings"
 
 	"ascii_art/art_string"
@@ -24,8 +26,14 @@ func Art(w http.ResponseWriter, r *http.Request) {
 
 	vars.Lines, vars.Read_lines_err = process_files.ProcessFiles(vars.Bytes, vars.Read_err, vars.Lines, banner)
 	if vars.Read_lines_err != nil {
+		if _, file_err := os.Stat("banners/" + banner + ".txt"); os.IsNotExist(file_err) {
+			fmt.Println("not found")
+			w.WriteHeader(http.StatusNotFound)
+		} else {
+			fmt.Println("found")
+			w.WriteHeader(http.StatusInternalServerError)
+		}
 		file_err := vars.Read_lines_err
-		w.WriteHeader(http.StatusInternalServerError)
 		vars.All_templates.ExecuteTemplate(w, "file-err.html", file_err)
 		return
 	}
