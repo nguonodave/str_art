@@ -4,8 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
 </head>
 <body>
-    <p>Oopsie! That page is not available</p>
+    <div class="body-container">
+        {{template "Nav"}}
+        <div class="error-container">
+            <div class="message-box">
+                <div class="error-heading">
+                    <h1>404 Not Found!!!</h1>
+                </div>
+                <div class="error-message">
+                    <p>{{.}}</p>
+                </div>
+            </div>
+
+            <div class="back-btn">
+                <a href="http://localhost:8001/"><input type="button" value="Take me home" class="buttons"></a>
+            </div>
+        </div>
+        <!-- <p>{{.}}</p> -->
+    </div>
 </body>
 </html>

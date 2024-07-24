@@ -38,7 +38,7 @@ func CheckNonPrintableChars(s string) error {
 	for _, char := range s {
 		if char > 126 || char < 32 {
 			// fmt.Println("Non-ascii printable characters encountered. Please provide only ascii printable characters in your string :)")
-			non_print_error := errors.New("Non-ascii printable characters encountered. Please provide only ascii printable characters in your string.")
+			non_print_error := errors.New("Found non-ascii printable characters in your string. Please provide only ascii printable characters.")
 			return non_print_error
 		}
 	}
@@ -70,8 +70,9 @@ func HomeOr404Page(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path[1:]
 
 	if len(path) > 0 && PageNotFound(path) {
+		info_404 := "Oopsie! That page is not available"
 		w.WriteHeader(http.StatusNotFound)
-		vars.All_templates.ExecuteTemplate(w, "404.html", nil)
+		vars.All_templates.ExecuteTemplate(w, "404.html", info_404)
 	} else {
 		vars.All_templates.ExecuteTemplate(w, "home.html", nil)
 	}
