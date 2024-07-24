@@ -11,7 +11,7 @@
 <body>
   <div class="body-container">
     {{template "Nav"}}
-    <section class="form-container">
+    <section class="form-container gray-back">
       <form action="/ascii-art" method="POST">
         <!-- <textarea name="str" id="str" cols="30" rows="10" placeholder="Enter the text to be displayed" class="str" required></textarea><br><br> -->
         <input type="text" id="str" name="str" placeholder="Enter the text to be displayed" class="str" required />
@@ -38,11 +38,12 @@
             <input type="radio" class="radio-input pointer" value="Thinkertoy" id="thinkertoy" name="banner" /><br />
             <div class="circle"></div>
           </label>
-          
         </div>
 
-        <input type="reset" value="Refresh" class="buttons" /><br /><br />
-        <input type="submit" value="Create Art" class="buttons" />
+        <div class="home-buttons">
+          <input type="reset" value="Refresh" class="refresh-btn buttons" />
+          <input type="submit" value="Create Art" class="buttons" />
+        </div>
       </form>
     </section>
   </div>
