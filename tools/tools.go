@@ -2,7 +2,10 @@ package tools
 
 import (
 	"errors"
+	"fmt"
+	"log"
 	"net/http"
+	"os"
 
 	"ascii_art/vars"
 	"ascii_art/write_output"
@@ -69,10 +72,21 @@ func PageNotFound(page string) bool {
 func HomeOr404Page(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path[1:]
 
-	if len(path) > 0 && PageNotFound(path) {
+	if _, err := os.Stat("templates/home.html"); os.IsNotExist(err) {
+		w.WriteHeader(http.StatusNotFound)
+		log.Println("The file home.html is missing")
+		fmt.Fprint(w, "Error displaying this page, please try again later.")
+	} else if len(path) > 0 && PageNotFound(path) {
 		info_404 := "Oopsie! That page is not available"
 		w.WriteHeader(http.StatusNotFound)
-		vars.All_templates.ExecuteTemplate(w, "404.html", info_404)
+
+		if _, err := os.Stat("templates/404.html"); os.IsNotExist(err) {
+			log.Println("The file 404.html is missing")
+			fmt.Fprint(w, "Error displaying this page, please try again later.")
+		} else {
+			vars.All_templates.ExecuteTemplate(w, "404.html", info_404)
+		}
+
 	} else {
 		vars.All_templates.ExecuteTemplate(w, "home.html", nil)
 	}

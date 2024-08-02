@@ -2,6 +2,7 @@ package art_server
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -18,9 +19,23 @@ func Art(w http.ResponseWriter, r *http.Request) {
 	banner := strings.ToLower(r.FormValue("banner"))
 	var art string
 
+	if _, err := os.Stat("templates/file-err.html"); os.IsNotExist(err) {
+		w.WriteHeader(http.StatusNotFound)
+		log.Println("The file file-err.html is missing")
+		fmt.Fprint(w, "Error displaying this page, please try again later.")
+		return
+	}
+
+	if _, err := os.Stat("templates/ascii-art.html"); os.IsNotExist(err) {
+		w.WriteHeader(http.StatusNotFound)
+		log.Println("The file ascii-art.html is missing")
+		fmt.Fprint(w, "Error displaying this page, please try again later.")
+		return
+	}
+
 	if r.Method != "POST" {
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		vars.All_templates.ExecuteTemplate(w, "file-err.html", "Method not allowed. Submit your request from the provided from")
+		vars.All_templates.ExecuteTemplate(w, "file-err.html", "Method not allowed.")
 		return
 	}
 
