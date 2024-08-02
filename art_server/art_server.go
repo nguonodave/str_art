@@ -18,6 +18,12 @@ func Art(w http.ResponseWriter, r *http.Request) {
 	banner := strings.ToLower(r.FormValue("banner"))
 	var art string
 
+	if r.Method != "POST" {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		vars.All_templates.ExecuteTemplate(w, "file-err.html", "Method not allowed. Submit your request from the provided from")
+		return
+	}
+
 	if non_print_error := tools.CheckNonPrintableChars(str); non_print_error != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		vars.All_templates.ExecuteTemplate(w, "file-err.html", non_print_error)
