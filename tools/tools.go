@@ -70,7 +70,7 @@ func PageNotFound(page string) bool {
 }
 
 func TemplateNotFound(temp string) bool {
-	_, err := os.Stat(temp)
+	_, err := os.Stat(vars.Template_dir + temp)
 	return os.IsNotExist(err)
 }
 
@@ -93,14 +93,14 @@ func TmpltNotFoundMsg(w http.ResponseWriter, temp string) {
 func HomeOr404Page(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path[1:]
 
-	if TemplateNotFound(vars.Template_dir+"home.html") || LinkedTemplateNotFound() {
+	if TemplateNotFound("home.html") || LinkedTemplateNotFound() {
 		w.WriteHeader(http.StatusNotFound)
 		TmpltNotFoundMsg(w, "home.html")
 	} else if len(path) > 0 && PageNotFound(path) {
 		info_404 := "Oopsie! That page is not available"
 		w.WriteHeader(http.StatusNotFound)
 
-		if TemplateNotFound(vars.Template_dir + "404.html") {
+		if TemplateNotFound("404.html") {
 			TmpltNotFoundMsg(w, "404.html")
 		} else {
 			vars.All_templates.ExecuteTemplate(w, "404.html", info_404)

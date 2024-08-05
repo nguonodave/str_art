@@ -18,13 +18,13 @@ func Art(w http.ResponseWriter, r *http.Request) {
 	banner := strings.ToLower(r.FormValue("banner"))
 	var art string
 
-	if tools.TemplateNotFound(vars.Template_dir + "file-err.html") {
+	if tools.TemplateNotFound("file-err.html") {
 		w.WriteHeader(http.StatusNotFound)
 		tools.TmpltNotFoundMsg(w, "file-err.html")
 		return
 	}
 
-	if tools.TemplateNotFound(vars.Template_dir + "ascii-art.html") {
+	if tools.TemplateNotFound("ascii-art.html") {
 		w.WriteHeader(http.StatusNotFound)
 		tools.TmpltNotFoundMsg(w, "ascii-art.html")
 		return
