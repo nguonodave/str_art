@@ -15,7 +15,7 @@ func ForWeb() {
 	// vars.Home_template, _ = template.ParseFiles("templates/home.html", "templates/nav.html")
 	// vars.Art_template, _ = template.ParseFiles("templates/ascii-art.html", "templates/nav.html")
 	// vars.Template_404, _ = template.ParseFiles("templates/404.html", "templates/nav.html")
-	vars.All_templates, _ = vars.All_templates.ParseGlob("templates/*.html")
+	vars.All_templates, _ = vars.All_templates.ParseGlob(vars.Template_dir + "*.html")
 
 	http.HandleFunc("/", tools.HomeOr404Page)
 	http.HandleFunc("/ascii-art", art_server.Art)

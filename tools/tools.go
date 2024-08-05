@@ -69,20 +69,28 @@ func PageNotFound(page string) bool {
 	return true
 }
 
+func TemplateNotFound(temp string) bool {
+	_, err := os.Stat(temp)
+	return os.IsNotExist(err)
+}
+
+func TmpltNotFoundMsg(w http.ResponseWriter, temp string) {
+	log.Println("The file " + temp + " is missing")
+	fmt.Fprint(w, "404: Error displaying this page, please try again later.")
+}
+
 func HomeOr404Page(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path[1:]
 
-	if _, err := os.Stat("templates/home.html"); os.IsNotExist(err) {
+	if TemplateNotFound(vars.Template_dir + "home.html") {
 		w.WriteHeader(http.StatusNotFound)
-		log.Println("The file home.html is missing")
-		fmt.Fprint(w, "Error displaying this page, please try again later.")
+		TmpltNotFoundMsg(w, "home.html")
 	} else if len(path) > 0 && PageNotFound(path) {
 		info_404 := "Oopsie! That page is not available"
 		w.WriteHeader(http.StatusNotFound)
 
-		if _, err := os.Stat("templates/404.html"); os.IsNotExist(err) {
-			log.Println("The file 404.html is missing")
-			fmt.Fprint(w, "Error displaying this page, please try again later.")
+		if TemplateNotFound(vars.Template_dir + "404.html") {
+			TmpltNotFoundMsg(w, "404.html")
 		} else {
 			vars.All_templates.ExecuteTemplate(w, "404.html", info_404)
 		}
