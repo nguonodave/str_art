@@ -74,15 +74,26 @@ func TemplateNotFound(temp string) bool {
 	return os.IsNotExist(err)
 }
 
+func LinkedTemplateNotFound() bool {
+	for _, temp := range vars.Linked_templates {
+		_, err := os.Stat(vars.Template_dir + temp)
+		if os.IsNotExist(err) {
+			return true
+		}
+	}
+
+	return false
+}
+
 func TmpltNotFoundMsg(w http.ResponseWriter, temp string) {
-	log.Println("The file " + temp + " is missing")
+	log.Println("The file " + temp + " or some template in it is missing")
 	fmt.Fprint(w, "404: Error displaying this page, please try again later.")
 }
 
 func HomeOr404Page(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path[1:]
 
-	if TemplateNotFound(vars.Template_dir+"home.html") || TemplateNotFound(vars.Template_dir+"nav.html") {
+	if TemplateNotFound(vars.Template_dir+"home.html") || LinkedTemplateNotFound() {
 		w.WriteHeader(http.StatusNotFound)
 		TmpltNotFoundMsg(w, "home.html")
 	} else if len(path) > 0 && PageNotFound(path) {
