@@ -19,4 +19,5 @@ var (
 	// Home_template, Art_template, Template_404 *template.Template
 	All_templates *template.Template
 	Pages         = []string{"ascii-art"}
+	Template_dir  = "templates/"
 )

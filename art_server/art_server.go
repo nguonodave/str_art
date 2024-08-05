@@ -2,7 +2,6 @@ package art_server
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -19,17 +18,15 @@ func Art(w http.ResponseWriter, r *http.Request) {
 	banner := strings.ToLower(r.FormValue("banner"))
 	var art string
 
-	if _, err := os.Stat("templates/file-err.html"); os.IsNotExist(err) {
+	if tools.TemplateNotFound(vars.Template_dir + "file-err.html") {
 		w.WriteHeader(http.StatusNotFound)
-		log.Println("The file file-err.html is missing")
-		fmt.Fprint(w, "Error displaying this page, please try again later.")
+		tools.TmpltNotFoundMsg(w, "file-err.html")
 		return
 	}
 
-	if _, err := os.Stat("templates/ascii-art.html"); os.IsNotExist(err) {
+	if tools.TemplateNotFound(vars.Template_dir + "ascii-art.html") {
 		w.WriteHeader(http.StatusNotFound)
-		log.Println("The file ascii-art.html is missing")
-		fmt.Fprint(w, "Error displaying this page, please try again later.")
+		tools.TmpltNotFoundMsg(w, "ascii-art.html")
 		return
 	}
 
