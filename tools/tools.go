@@ -82,7 +82,7 @@ func TmpltNotFoundMsg(w http.ResponseWriter, temp string) {
 func HomeOr404Page(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path[1:]
 
-	if TemplateNotFound(vars.Template_dir + "home.html") {
+	if TemplateNotFound(vars.Template_dir+"home.html") || TemplateNotFound(vars.Template_dir+"nav.html") {
 		w.WriteHeader(http.StatusNotFound)
 		TmpltNotFoundMsg(w, "home.html")
 	} else if len(path) > 0 && PageNotFound(path) {
