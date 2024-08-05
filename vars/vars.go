@@ -17,7 +17,8 @@ var (
 	Out_file           *os.File // the file where the string arts are written to.
 	Out_file_err       error
 	// Home_template, Art_template, Template_404 *template.Template
-	All_templates *template.Template
-	Pages         = []string{"ascii-art"}
-	Template_dir  = "templates/"
+	All_templates    *template.Template
+	Pages            = []string{"ascii-art"}
+	Template_dir     = "templates/"
+	Linked_templates = []string{"header.html", "nav.html", "footer.html"}
 )
