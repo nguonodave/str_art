@@ -93,6 +93,12 @@ func TmpltNotFoundMsg(w http.ResponseWriter, temp string) {
 func HomeOr404Page(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path[1:]
 
+	if r.Method != "GET" {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		vars.All_templates.ExecuteTemplate(w, "file-err.html", "Method not allowed.")
+		return
+	}
+
 	if TemplateNotFound("home.html") || LinkedTemplateNotFound() {
 		w.WriteHeader(http.StatusNotFound)
 		TmpltNotFoundMsg(w, "home.html")
